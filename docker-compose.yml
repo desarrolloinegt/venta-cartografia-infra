@@ -27,6 +27,7 @@ services:
 
   laravel: 
     build: ./
+    container_name: laravel
     environment:
       TZ: "${TIMEZONE}"
     #volumes:
