@@ -17,6 +17,8 @@ RUN composer install --no-interaction --optimize-autoloader --no-dev; \
     yarn install; \
     yarn build ; \
     php artisan storage:link
+RUN php artisan cache:clear
+RUN php artisan config:clear
 
 # Optimizing Configuration loading
 RUN php artisan config:cache
