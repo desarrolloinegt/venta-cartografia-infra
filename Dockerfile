@@ -22,13 +22,13 @@ WORKDIR /app
 COPY ./laravel-app/ /app/
 
 # Instalar dependencias de Laravel y frontend
-RUN composer install --no-interaction --optimize-autoloader; \
-    npm install; \
-    yarn install; \
-    yarn build; \
-    php artisan config:clear; \
-    php artisan cache:clear; \
-    php artisan storage:link
+# RUN composer install --no-interaction --optimize-autoloader; \
+#     npm install; \
+#     yarn install; \
+#     yarn build; \
+#     php artisan config:clear; \
+#     php artisan cache:clear; \
+#     php artisan storage:link
 
 # Cambiar permisos
 RUN chown -R application:application /app
