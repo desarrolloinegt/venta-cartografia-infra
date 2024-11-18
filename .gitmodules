@@ -1,0 +1,3 @@
+[submodule "laravel-app"]
+	path = laravel-app
+	url = git@github.com:desarrolloinegt/venta-cartografia.git
