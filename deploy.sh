@@ -18,26 +18,6 @@ print_error() {
 print_success() {
     echo -e "${GREEN}[$(date +'%Y-%m-%d %H:%M:%S')] SUCCESS:${NC} $1"
 }
-
-# Verificar si docker está instalado
-if ! command -v docker &> /dev/null; then
-    print_error "Docker no está instalado. Por favor, instálalo primero."
-    exit 1
-fi
-
-# Verificar si docker-compose está instalado
-if ! command -v docker compose &> /dev/null; then
-    print_error "Docker Compose no está instalado. Por favor, instálalo primero."
-    exit 1
-fi
-
-# Crear carpeta app si no existe
-if [ ! -d "app" ]; then
-    print_message "Creando directorio app..."
-    mkdir app
-    print_success "Directorio app creado."
-fi
-
 # Detener contenedores existentes
 print_message "Deteniendo contenedores existentes..."
 docker compose down
