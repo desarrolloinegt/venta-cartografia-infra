@@ -1,31 +1,39 @@
 FROM webdevops/php-nginx:8.2-alpine
 
-# Install Laravel framework system requirements (https://laravel.com/docs/8.x/deployment#optimizing-configuration-loading)
-RUN  set -eux; \ 
-     apk update && apk add oniguruma-dev postgresql-dev libxml2-dev nodejs npm ;\
-     npm install --global yarn
+# Configuración del entorno
+RUN set -eux; \
+    sed -i 's|dl-cdn.alpinelinux.org|dl-4.alpinelinux.org|g' /etc/apk/repositories; \
+    apk update && apk add --no-cache \
+    oniguruma-dev \
+    postgresql-dev \
+    libxml2-dev \
+    nodejs \
+    npm; \
+    npm install --global yarn
 
-# Copy Composer binary from the Composer official Docker image
+# Copiar Composer desde la imagen oficial
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
+# Definir variables de entorno
 ENV WEB_DOCUMENT_ROOT /app/public
 WORKDIR /app
-COPY ./laravel-app .
 
-RUN composer install --no-interaction --optimize-autoloader --no-dev; \
+# Copiar los archivos de la aplicación al contenedor
+COPY ./laravel-app/ /app/
+
+# Instalar dependencias de Laravel y frontend
+RUN composer install --no-interaction --optimize-autoloader; \
     npm install; \
     yarn install; \
-    yarn build ; \
+    yarn build; \
+    php artisan config:clear; \
+    php artisan cache:clear; \
     php artisan storage:link
-RUN php artisan cache:clear
-RUN php artisan config:clear
 
-# Optimizing Configuration loading
-RUN php artisan config:cache
-# Optimizing Route loading
-RUN php artisan route:cache
-# Optimizing View loading
-RUN php artisan view:cache 
+# Cambiar permisos
+RUN chown -R application:application /app
 
-
-RUN chown -R application:application .
+# Precompilar vistas, rutas y configuraciones para producción
+RUN php artisan config:cache && \
+    php artisan route:cache && \
+    php artisan view:cache
