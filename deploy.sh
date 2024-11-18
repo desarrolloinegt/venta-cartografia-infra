@@ -18,6 +18,21 @@ print_error() {
 print_success() {
     echo -e "${GREEN}[$(date +'%Y-%m-%d %H:%M:%S')] SUCCESS:${NC} $1"
 }
+# Verificar si existe el archivo .env
+if [ ! -f ".env" ]; then
+    print_error "Archivo .env no encontrado. Por favor, crea el archivo .env primero."
+    exit 1
+fi
+if [ ! -f "./laravel-app/.env" ]; then
+    print_error "Archivo .env de LARAVEL no encontrado. Por favor, crea el archivo .env primero."
+    exit 1
+fi
+
+# Cargar variables del archivo .env
+set -a
+source .env
+set +a
+
 # Detener contenedores existentes
 print_message "Deteniendo contenedores existentes..."
 docker compose down

@@ -19,7 +19,7 @@ ENV WEB_DOCUMENT_ROOT /app/public
 WORKDIR /app
 
 # Copiar los archivos de la aplicación al contenedor
-COPY ./laravel-app/ /app/
+# COPY ./laravel-app/ /app/
 
 # Instalar dependencias de Laravel y frontend
 # RUN composer install --no-interaction --optimize-autoloader; \
