@@ -54,7 +54,9 @@ docker exec laravel yarn build
 docker exec laravel php artisan config:clear
 docker exec laravel php artisan cache:clear
 docker exec laravel php artisan storage:link
-
+docker exec laravel php artisan config:cache
+docker exec laravel php artisan route:cache 
+docker exec laravel php artisan view:cache
 # Verificar si los contenedores están corriendo
 if docker compose ps | grep -q "laravel.*running"; then
     print_success "Despliegue completado exitosamente!"

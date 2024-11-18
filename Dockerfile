@@ -34,6 +34,6 @@ WORKDIR /app
 RUN chown -R application:application /app
 
 # Precompilar vistas, rutas y configuraciones para producción
-RUN php artisan config:cache && \
-    php artisan route:cache && \
-    php artisan view:cache
+# RUN php artisan config:cache && \
+#     php artisan route:cache && \
+#     php artisan view:cache
