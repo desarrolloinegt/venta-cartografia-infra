@@ -57,8 +57,9 @@ docker exec laravel php artisan storage:link
 docker exec laravel php artisan config:cache
 docker exec laravel php artisan route:cache 
 docker exec laravel php artisan view:cache
+
 # Verificar si los contenedores están corriendo
-if docker compose ps | grep -q "laravel.*running"; then
+if docker compose ps | grep -q "laravel"; then
     print_success "Despliegue completado exitosamente!"
     print_message "La aplicación está corriendo en: http://localhost:${LARAVEL_PORT:-80}"
     print_message "PhpMyAdmin está disponible en: http://localhost:${PHPMYADMIN_PORT:-8080}"

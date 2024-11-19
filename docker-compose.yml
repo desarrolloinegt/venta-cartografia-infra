@@ -32,6 +32,8 @@ services:
     container_name: laravel
     environment:
       TZ: "${TIMEZONE}"
+    env_file:
+      - .env
     volumes:
       - ./laravel-app:/app
     ports:
